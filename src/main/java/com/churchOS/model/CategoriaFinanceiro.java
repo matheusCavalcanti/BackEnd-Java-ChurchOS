@@ -6,26 +6,25 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
-import com.churchOS.model.enums.TipoMinisterio;
+import com.churchOS.model.enums.Natureza;
 
 @Entity
-@Table(name = "ministro")
-public class Ministro {
+@Table(name = "categoria_financeiro")
+public class CategoriaFinanceiro {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne
-	@JoinColumn(name="id_pessoa", nullable=false)
-	private Pessoa pessoa;
+	@NotNull
+	private String descricao;
 	
+	@NotNull
 	@Enumerated(EnumType.STRING)
-	private TipoMinisterio tipoMinisterio;
+	private Natureza natureza;
 
 	public Long getId() {
 		return id;
@@ -35,20 +34,20 @@ public class Ministro {
 		this.id = id;
 	}
 
-	public Pessoa getPessoa() {
-		return pessoa;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
-	public TipoMinisterio getTipoMinisterio() {
-		return tipoMinisterio;
+	public Natureza getNatureza() {
+		return natureza;
 	}
 
-	public void setTipoMinisterio(TipoMinisterio tipoMinisterio) {
-		this.tipoMinisterio = tipoMinisterio;
+	public void setNatureza(Natureza natureza) {
+		this.natureza = natureza;
 	}
 
 	@Override
@@ -67,7 +66,7 @@ public class Ministro {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Ministro other = (Ministro) obj;
+		CategoriaFinanceiro other = (CategoriaFinanceiro) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

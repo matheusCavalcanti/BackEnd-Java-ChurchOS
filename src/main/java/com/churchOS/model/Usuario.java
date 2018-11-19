@@ -6,26 +6,31 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
-import com.churchOS.model.enums.TipoMinisterio;
+import com.churchOS.model.enums.TipoPermissao;
 
 @Entity
-@Table(name = "ministro")
-public class Ministro {
+@Table(name = "usuario")
+public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne
-	@JoinColumn(name="id_pessoa", nullable=false)
-	private Pessoa pessoa;
+	@NotNull
+	private String email;
+	
+	@NotNull
+	private String senha;
 	
 	@Enumerated(EnumType.STRING)
-	private TipoMinisterio tipoMinisterio;
+	private TipoPermissao permissao;
+	
+	@OneToOne
+	private Pessoa pessoa;
 
 	public Long getId() {
 		return id;
@@ -35,20 +40,36 @@ public class Ministro {
 		this.id = id;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
+	public TipoPermissao getPermissao() {
+		return permissao;
+	}
+
+	public void setPermissao(TipoPermissao permissao) {
+		this.permissao = permissao;
+	}
+
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
-	}
-
-	public TipoMinisterio getTipoMinisterio() {
-		return tipoMinisterio;
-	}
-
-	public void setTipoMinisterio(TipoMinisterio tipoMinisterio) {
-		this.tipoMinisterio = tipoMinisterio;
 	}
 
 	@Override
@@ -67,7 +88,7 @@ public class Ministro {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Ministro other = (Ministro) obj;
+		Usuario other = (Usuario) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

@@ -17,6 +17,9 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.churchOS.model.enums.EstadoCivil;
+import com.churchOS.model.enums.Sexo;
+import com.churchOS.model.enums.Vinculo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity

@@ -1,31 +1,35 @@
 package com.churchOS.model;
 
+import java.math.BigDecimal;
+import java.util.Calendar;
+
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-import com.churchOS.model.enums.TipoMinisterio;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name = "ministro")
-public class Ministro {
+@Table(name = "contribuicao_excluida")
+public class ContribuicaoExcluida {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne
-	@JoinColumn(name="id_pessoa", nullable=false)
-	private Pessoa pessoa;
+	private String pessoa;
 	
-	@Enumerated(EnumType.STRING)
-	private TipoMinisterio tipoMinisterio;
+	private BigDecimal valor;
+	
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@Temporal(TemporalType.DATE)
+	private Calendar data;
+	
+	private String motivo;
 
 	public Long getId() {
 		return id;
@@ -35,20 +39,36 @@ public class Ministro {
 		this.id = id;
 	}
 
-	public Pessoa getPessoa() {
+	public String getPessoa() {
 		return pessoa;
 	}
 
-	public void setPessoa(Pessoa pessoa) {
+	public void setPessoa(String pessoa) {
 		this.pessoa = pessoa;
 	}
 
-	public TipoMinisterio getTipoMinisterio() {
-		return tipoMinisterio;
+	public BigDecimal getValor() {
+		return valor;
 	}
 
-	public void setTipoMinisterio(TipoMinisterio tipoMinisterio) {
-		this.tipoMinisterio = tipoMinisterio;
+	public void setValor(BigDecimal valor) {
+		this.valor = valor;
+	}
+
+	public Calendar getData() {
+		return data;
+	}
+
+	public void setData(Calendar date) {
+		this.data = date;
+	}
+
+	public String getMotivo() {
+		return motivo;
+	}
+
+	public void setMotivo(String motivo) {
+		this.motivo = motivo;
 	}
 
 	@Override
@@ -67,7 +87,7 @@ public class Ministro {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Ministro other = (Ministro) obj;
+		ContribuicaoExcluida other = (ContribuicaoExcluida) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

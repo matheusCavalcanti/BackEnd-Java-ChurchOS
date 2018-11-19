@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+
 @ControllerAdvice
 public class ChurchExceptionHandler extends ResponseEntityExceptionHandler {
 	
@@ -34,8 +36,8 @@ public class ChurchExceptionHandler extends ResponseEntityExceptionHandler {
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		
 		String mensagemUsuario = messageSource.getMessage("mensagem.invalida", null, localeBR);
-		String mensagemDev = ex.getCause().toString();
-		List<Erro> erros = Arrays.asList(new Erro(mensagemUsuario, mensagemDev));
+		//String mensagemDev = ex.getCause().toString();
+		List<Erro> erros = Arrays.asList(new Erro(mensagemUsuario));
 		return handleExceptionInternal(ex, erros, headers, HttpStatus.BAD_REQUEST, request);
 	}
 	
@@ -43,6 +45,7 @@ public class ChurchExceptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		
+		//String mensagemUsuario = messageSource.getMessage("mensagem.invalida", null, localeBR);
 		List<Erro> erros = criarListaDeErros(ex.getBindingResult());
 		return handleExceptionInternal(ex, erros, headers, HttpStatus.BAD_REQUEST, request);
 	}
@@ -51,8 +54,8 @@ public class ChurchExceptionHandler extends ResponseEntityExceptionHandler {
 	public ResponseEntity<Object> handleEmptyResultDataAccessException(EmptyResultDataAccessException ex, WebRequest request) {
 		
 		String mensagemUsuario = messageSource.getMessage("recurso.nao-encontrado", null, localeBR);
-		String mensagemDev = ex.toString();
-		List<Erro> erros = Arrays.asList(new Erro(mensagemUsuario, mensagemDev));
+		//String mensagemDev = ex.toString();
+		List<Erro> erros = Arrays.asList(new Erro(mensagemUsuario));
 		return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 	}
 	
@@ -61,8 +64,7 @@ public class ChurchExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		for (FieldError fieldError : bindingResult.getFieldErrors()) {
 			String mensagemUsuario = messageSource.getMessage(fieldError, localeBR);
-			String mensagemDev = fieldError.toString();
-			erros.add(new Erro(mensagemUsuario, mensagemDev));
+			erros.add(new Erro(mensagemUsuario));
 		}
 		return erros;
 	}
@@ -70,19 +72,13 @@ public class ChurchExceptionHandler extends ResponseEntityExceptionHandler {
 	private static class Erro {
 		
 		private String mensagemUsuario;
-		private String mensagemDev;
 		
-		public Erro(String mensagemUsuario, String mensagemDev) {
+		public Erro(String mensagemUsuario) {
 			this.mensagemUsuario = mensagemUsuario;
-			this.mensagemDev = mensagemDev;
 		}
 
 		public String getMensagemUsuario() {
 			return mensagemUsuario;
-		}
-
-		public String getMensagemDev() {
-			return mensagemDev;
 		}
 
 	}

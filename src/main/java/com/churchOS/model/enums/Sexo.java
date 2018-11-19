@@ -1,4 +1,4 @@
-package com.churchOS.model;
+package com.churchOS.model.enums;
 
 public enum Sexo {
 

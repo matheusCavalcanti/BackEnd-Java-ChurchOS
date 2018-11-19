@@ -15,6 +15,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.churchOS.model.enums.TipoCulto;
+
 @Entity
 @Table(name = "escala_louvor")
 public class EscalaLouvor {
@@ -29,6 +33,7 @@ public class EscalaLouvor {
 	private String descricao;
 	
 	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern="dd/MM/yyyy")
 	private Date data;
 	
 	@ManyToMany

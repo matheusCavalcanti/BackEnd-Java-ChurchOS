@@ -2,7 +2,7 @@ package com.churchOS.repository.projection;
 
 import java.util.Calendar;
 
-import com.churchOS.model.TipoCulto;
+import com.churchOS.model.enums.TipoCulto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class ResumoEscalaLouvor {
